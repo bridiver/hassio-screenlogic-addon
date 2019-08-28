@@ -15,6 +15,5 @@
       "armhf",
       "armv7",
       "i386"
-    ],
-    "image": "hub/{arch}-pentair-screenlogic"
+    ]
   }
