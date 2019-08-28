@@ -38,6 +38,10 @@ function connect(client) {
     console.log('/pentair/cyanuricacid/state,' + chemData.cyanuricAcid);
     console.log('/pentair/alkalinity/state,' + chemData.alkalinity);
     client.close();
+  }).on('loginFailed', function() {
+    console.error('Login error')
+  }).on('badParameter', function() {
+    console.error('Bad parameter')
   });
 
   client.connect();
