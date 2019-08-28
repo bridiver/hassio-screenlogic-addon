@@ -8,5 +8,6 @@
     "host_network": true,
     "boot": "auto",
     "options": {},
-    "schema": {}
+    "schema": {},
+    "image": "hub/{arch}-pentair-screenlogic"
   }
