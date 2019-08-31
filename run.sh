@@ -2,11 +2,13 @@
 #set -e
 
 CONFIG_PATH=/data/options.json
+USER="$(jq --raw-output '.user' $CONFIG_PATH)"
+PASSWORD="$(jq --raw-output '.password' $CONFIG_PATH)"
 
 cd /node_modules/node-screenlogic
 
 while [ 1 ]; do
-PAYLOAD=`mosquitto_sub -u $USER -P $PASSWORD -v -t /pentair/# -W 10 -C 1`
+PAYLOAD=`mosquitto_sub -u ${USER} -P ${PASSWORD} -v -t /pentair/# -W 10 -C 1`
 if [ $? -gt 0 ]; then
   echo "MQTT Client exited with non-zero status"
   sleep 10
@@ -31,8 +33,6 @@ else
   esac
 fi
 
-node send_state_to_ha.js | awk -F, '{print "mosquitto_pub -u " $USER " -P " $PASSWORD " -t " $1 " -m " $2}' | bash -s
+node send_state_to_ha.js | awk -v user="$USER" -v password="$PASSWORD" -F, '{print "mosquitto_pub -u " user " -P " password " -t " $1 " -m " $2}' | bash -s
 
 done
-
-
